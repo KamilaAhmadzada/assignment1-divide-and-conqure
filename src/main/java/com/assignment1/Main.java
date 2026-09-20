@@ -7,5 +7,6 @@ public class Main {
         System.out.println("Before: " + java.util.Arrays.toString(arr));
         QuickSorter.sort(arr);
         System.out.println("After:  " + java.util.Arrays.toString(arr));
+        System.out.println("selected:" + DeterministicSelector.select(arr, 4));
     }
 }
