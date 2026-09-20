@@ -16,5 +16,9 @@ public class Main {
         System.out.println("selected k=9: " + DeterministicSelector.select(arr.clone(), 9));
         System.out.println("closest pair distance:" + ClosestPairSolver.closestPair(pts));
 
+        System.out.println("random:      " + java.util.Arrays.toString(Experiment.randomArray(10)));
+        System.out.println("sorted:      " + java.util.Arrays.toString(Experiment.sortedArray(10)));
+        System.out.println("reverse:     " + java.util.Arrays.toString(Experiment.reverseSortedArray(10)));
+        System.out.println("duplicates:  " + java.util.Arrays.toString(Experiment.duplicateHeavyArray(10)));
     }
 }
