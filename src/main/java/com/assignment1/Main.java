@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         int[] arr = {8, 3, 9, 1, 5, 2, 7, 4, 6, 0};
         Point[] pts = {
-                new Point(2, 3), new Point(12,30), new Point(40, 50),
+                new Point(2, 3), new Point(12, 30), new Point(40, 50),
                 new Point(5, 1), new Point(12, 10), new Point(3, 4)
         };
 
@@ -20,5 +20,11 @@ public class Main {
         System.out.println("sorted:      " + java.util.Arrays.toString(Experiment.sortedArray(10)));
         System.out.println("reverse:     " + java.util.Arrays.toString(Experiment.reverseSortedArray(10)));
         System.out.println("duplicates:  " + java.util.Arrays.toString(Experiment.duplicateHeavyArray(10)));
+
+        int[] mergeSortTest = Experiment.randomArray(20);
+        MergeSorter.sort(mergeSortTest);
+        System.out.println("mergeSorted: " + java.util.Arrays.toString(mergeSortTest));
+        System.out.println("mergeSort maxDepth: " + MergeSorter.maxDepth);
+        System.out.println("mergeSort comparisons: " + MergeSorter.comparisons);
     }
 }

@@ -2,6 +2,9 @@ package com.assignment1;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
     public class Experiment {
         private static final Random RANDOM = new Random();
@@ -33,5 +36,38 @@ import java.util.Random;
             for (int i = 0; i < n; i++) arr[i] = RANDOM.nextInt(5); // only 5 distinct values
             return arr;
         }
+        public static void main(String[] args) throws IOException {
+            try (PrintWriter writer = new PrintWriter(new FileWriter("results/results.csv"))) {
+                writer.println("algorithm,inputType,size,timeMs,maxDepth,comparisons");
+
+                int[] sizes = {100, 1000, 10000};
+                String[] types = {"random", "sorted", "reverse", "duplicates"};
+
+                for (int size : sizes) {
+                    for (String type : types) {
+                        int[] arr = generate(type, size);
+
+                        long start = System.nanoTime();
+                        MergeSorter.sort(arr);
+                        long end = System.nanoTime();
+                        long timeMs = (end - start) / 1_000_000;
+
+                        writer.println("MergeSort," + type + "," + size + "," + timeMs + "," + MergeSorter.maxDepth + "," + MergeSorter.comparisons);
+                    }
+                }
+            }
+        }
+
+        private static int[] generate(String type, int n) {
+            switch (type) {
+                case "sorted": return sortedArray(n);
+                case "reverse": return reverseSortedArray(n);
+                case "duplicates": return duplicateHeavyArray(n);
+                default: return randomArray(n);
+            }
+        }
     }
+
+
+
 
