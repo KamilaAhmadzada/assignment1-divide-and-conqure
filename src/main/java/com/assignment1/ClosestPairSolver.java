@@ -58,7 +58,7 @@ public class ClosestPairSolver {
         return min;
     }
 
-    private static double bruteForce(Point[] points, int lo, int hi) {
+    public static double bruteForce(Point[] points, int lo, int hi) {
         double min = Double.MAX_VALUE;
         for (int i = lo; i <= hi; i++) {
             for (int j = i + 1; j <= hi; j++) {
