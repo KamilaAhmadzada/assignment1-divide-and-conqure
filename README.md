@@ -1,5 +1,5 @@
 # Assignment 1: Divide-and-Conquer Algorithm Analysis
-
+**Release:** [v1.0](../../releases/tag/v1.0) — final submission with all four algorithms, tests, and analysis complete.
 ## A. Project Overview
 
 This project implements and analyzes four classic divide-and-conquer algorithms in Java:
