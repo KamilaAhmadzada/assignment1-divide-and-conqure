@@ -5,17 +5,29 @@ import java.util.Comparator;
 
 public class ClosestPairSolver {
 
+    public static int comparisons = 0;
+    public static int maxDepth = 0;
+    private static int depth = 0;
+
     public static double closestPair(Point[] points) {
+        comparisons = 0;
+        maxDepth = 0;
+        depth = 0;
         Point[] byX = points.clone();
         Arrays.sort(byX, Comparator.comparingDouble(p -> p.x));
         return closestPair(byX, 0, byX.length - 1);
     }
 
     private static double closestPair(Point[] byX, int lo, int hi) {
+        depth++;
+        maxDepth = Math.max(maxDepth, depth);
+
         int n = hi - lo + 1;
 
         if (n <= 3) {
-            return bruteForce(byX, lo, hi);
+            double result = bruteForce(byX, lo, hi);
+            depth--;
+            return result;
         }
 
         int mid = lo + (hi - lo) / 2;
@@ -25,7 +37,6 @@ public class ClosestPairSolver {
         double rightMin = closestPair(byX, mid + 1, hi);
         double min = Math.min(leftMin, rightMin);
 
-        // collect points within 'min' distance of the dividing line
         Point[] strip = new Point[n];
         int stripSize = 0;
         for (int i = lo; i <= hi; i++) {
@@ -38,10 +49,12 @@ public class ClosestPairSolver {
 
         for (int i = 0; i < stripSize; i++) {
             for (int j = i + 1; j < stripSize && (strip[j].y - strip[i].y) < min; j++) {
+                comparisons++;
                 min = Math.min(min, strip[i].distanceTo(strip[j]));
             }
         }
 
+        depth--;
         return min;
     }
 
@@ -49,6 +62,7 @@ public class ClosestPairSolver {
         double min = Double.MAX_VALUE;
         for (int i = lo; i <= hi; i++) {
             for (int j = i + 1; j <= hi; j++) {
+                comparisons++;
                 min = Math.min(min, points[i].distanceTo(points[j]));
             }
         }

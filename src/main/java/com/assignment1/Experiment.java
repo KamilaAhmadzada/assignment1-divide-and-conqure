@@ -36,6 +36,13 @@ import java.io.PrintWriter;
             for (int i = 0; i < n; i++) arr[i] = RANDOM.nextInt(5); // only 5 distinct values
             return arr;
         }
+        public static Point[] randomPoints(int n) {
+            Point[] pts = new Point[n];
+            for (int i = 0; i < n; i++) {
+                pts[i] = new Point(RANDOM.nextInt(n * 10), RANDOM.nextInt(n * 10));
+            }
+            return pts;
+        }
         public static void main(String[] args) throws IOException {
             try (PrintWriter writer = new PrintWriter(new FileWriter("results/results.csv"))) {
                 writer.println("algorithm,inputType,size,timeMs,maxDepth,comparisons");
@@ -65,7 +72,12 @@ import java.io.PrintWriter;
                         long end3 = System.nanoTime();
                         long timeMs3 = (end3 - start3) / 1_000_000;
                         writer.println("DeterministicSelect," + type + "," + size + "," + timeMs3 + "," + DeterministicSelector.maxDepth + "," + DeterministicSelector.comparisons);
-                    }
+                        Point[] pts = randomPoints(size);
+                        long start4 = System.nanoTime();
+                        ClosestPairSolver.closestPair(pts);
+                        long end4 = System.nanoTime();
+                        long timeMs4 = (end4 - start4) / 1_000_000;
+                        writer.println("ClosestPair," + type + "," + size + "," + timeMs4 + "," + ClosestPairSolver.maxDepth + "," + ClosestPairSolver.comparisons); }
                 }
             }
         }
