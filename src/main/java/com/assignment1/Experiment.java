@@ -59,6 +59,12 @@ import java.io.PrintWriter;
                         long end2 = System.nanoTime();
                         long timeMs2 = (end2 - start2) / 1_000_000;
                         writer.println("QuickSort," + type + "," + size + "," + timeMs2 + "," + QuickSorter.maxDepth + "," + QuickSorter.comparisons);
+                        int[] arr3 = generate(type, size);
+                        long start3 = System.nanoTime();
+                        DeterministicSelector.select(arr3, size / 2);
+                        long end3 = System.nanoTime();
+                        long timeMs3 = (end3 - start3) / 1_000_000;
+                        writer.println("DeterministicSelect," + type + "," + size + "," + timeMs3 + "," + DeterministicSelector.maxDepth + "," + DeterministicSelector.comparisons);
                     }
                 }
             }

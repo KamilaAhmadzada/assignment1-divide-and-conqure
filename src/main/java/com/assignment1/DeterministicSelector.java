@@ -2,19 +2,40 @@ package com.assignment1;
 
 public class DeterministicSelector {
 
+    public static int comparisons = 0;
+    public static int maxDepth = 0;
+    private static int depth = 0;
+
     public static int select(int[] arr, int k) {
+        comparisons = 0;
+        maxDepth = 0;
+        depth = 0;
         return select(arr, 0, arr.length - 1, k);
     }
 
     private static int select(int[] arr, int lo, int hi, int k) {
-        if (lo == hi) return arr[lo];
+        depth++;
+        maxDepth = Math.max(maxDepth, depth);
+
+        if (lo == hi) {
+            depth--;
+            return arr[lo];
+        }
 
         int pivotIndex = medianOfMedians(arr, lo, hi);
         pivotIndex = partition(arr, lo, hi, pivotIndex);
 
-        if (k == pivotIndex) return arr[k];
-        if (k < pivotIndex) return select(arr, lo, pivotIndex - 1, k);
-        return select(arr, pivotIndex + 1, hi, k);
+        int result;
+        if (k == pivotIndex) {
+            result = arr[k];
+        } else if (k < pivotIndex) {
+            result = select(arr, lo, pivotIndex - 1, k);
+        } else {
+            result = select(arr, pivotIndex + 1, hi, k);
+        }
+
+        depth--;
+        return result;
     }
 
     private static int medianOfMedians(int[] arr, int lo, int hi) {
@@ -44,6 +65,7 @@ public class DeterministicSelector {
 
         int store = lo;
         for (int i = lo; i < hi; i++) {
+            comparisons++;
             if (arr[i] < pivot) {
                 swap(arr, store, i);
                 store++;
@@ -57,7 +79,9 @@ public class DeterministicSelector {
         for (int i = lo + 1; i <= hi; i++) {
             int key = arr[i];
             int j = i - 1;
-            while (j >= lo && arr[j] > key) {
+            while (j >= lo) {
+                comparisons++;
+                if (arr[j] <= key) break;
                 arr[j + 1] = arr[j];
                 j--;
             }
