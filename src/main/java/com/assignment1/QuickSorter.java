@@ -5,11 +5,21 @@ import java.util.Random;
 public class QuickSorter {
     private static final Random RANDOM = new Random();
 
+    public static int comparisons = 0;
+    public static int maxDepth = 0;
+    private static int depth = 0;
+
     public static void sort(int[] arr) {
+        comparisons = 0;
+        maxDepth = 0;
+        depth = 0;
         sort(arr, 0, arr.length - 1);
     }
 
     private static void sort(int[] arr, int lo, int hi) {
+        depth++;
+        maxDepth = Math.max(maxDepth, depth);
+
         while (lo < hi) {
             int p = partition(arr, lo, hi);
 
@@ -21,6 +31,8 @@ public class QuickSorter {
                 hi = p - 1;
             }
         }
+
+        depth--;
     }
 
     private static int partition(int[] arr, int lo, int hi) {
@@ -30,6 +42,7 @@ public class QuickSorter {
 
         int i = lo;
         for (int j = lo; j < hi; j++) {
+            comparisons++;
             if (arr[j] < pivot) {
                 swap(arr, i, j);
                 i++;

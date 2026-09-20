@@ -53,6 +53,12 @@ import java.io.PrintWriter;
                         long timeMs = (end - start) / 1_000_000;
 
                         writer.println("MergeSort," + type + "," + size + "," + timeMs + "," + MergeSorter.maxDepth + "," + MergeSorter.comparisons);
+                        int[] arr2 = generate(type, size);
+                        long start2 = System.nanoTime();
+                        QuickSorter.sort(arr2);
+                        long end2 = System.nanoTime();
+                        long timeMs2 = (end2 - start2) / 1_000_000;
+                        writer.println("QuickSort," + type + "," + size + "," + timeMs2 + "," + QuickSorter.maxDepth + "," + QuickSorter.comparisons);
                     }
                 }
             }
